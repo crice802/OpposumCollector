@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/opposum-index.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+  <h1>Opposum List</h1>
+  <img src="{% static 'images/' %}" alt="" />
+  <img src="{% static 'images/' %}" alt="" />
+  <img src="{% static 'images/' %}" alt="" />
+  <img src="{% static 'images/' %}" alt="" />
+</section>
+
+<section class="card-container">
+  {% for opposum in opposums %}
+    <div class="card">
+      {% comment %} Add this line {% endcomment %}
+      <a href="{% url 'opposums_detail' opposum.id %}">
+        <div class="card-content">
+          <div class="card-img-container">
+            <img 
+              src="{% static '' %}" 
+              alt=""
+            >
+          </div>
+          <h2 class="card-title">{{ opposum.name }}</h2>
+          {% if opposum.age > 0 %}
+            <p>A {{ opposum.age }} year old {{ opposum.breed }}</p>
+          {% else %}
+            <p>A {{ opposum.breed }} garbage baby.</p>
+          {% endif %}
+          <p><small>{{ opposum.description }}</small></p>
+        </div>
+      {% comment %} And this line {% endcomment %}
+      </a>
+    </div>
+  {% endfor %}
+</section>
+
+{% endblock %}

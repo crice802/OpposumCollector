@@ -1,0 +1,25 @@
+<section class="card-container">
+  {% for opposum in opposums %}
+    <div class="card">
+      {% comment %} Add this line {% endcomment %}
+      <a href="/opposums/{{ opposum.id }}">
+        <div class="card-content">
+          <div class="card-img-container">
+            <img 
+              src="{% static 'images/sk8r-boi-opposum.svg' %}" 
+              alt="A skater boy opposum"
+            >
+          </div>
+          <h2 class="card-title">{{ opposum.name }}</h2>
+          {% if opposum.age > 0 %}
+            <p>A {{ opposum.age }} year old {{ opposum.breed }}</p>
+          {% else %}
+            <p>A {{ opposum.breed }} kitten.</p>
+          {% endif %}
+          <p><small>{{ opposum.description }}</small></p>
+        </div>
+      {% comment %} And this line {% endcomment %}
+      </a>
+    </div>
+  {% endfor %}
+</section>
