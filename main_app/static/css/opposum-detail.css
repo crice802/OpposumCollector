@@ -1,4 +1,4 @@
-.cat-container {
+.opposum-container {
   padding: 35px 30px;
   display: flex;
   flex-direction: column;
@@ -6,7 +6,7 @@
   justify-content: center;
 }
 
-.cat-img {
+.opposum-img {
   width: 75%;
   max-width: 350px;
 }
@@ -16,11 +16,11 @@
   border-radius: var(--card-border-radius);
 }
 
-.cat-details {
+.opposum-details {
   width: 98%;
 }
 
-.cat-actions {
+.opposum-actions {
   margin-top: 20px;
 }
 
@@ -72,24 +72,24 @@
   color: var(--submit);
 }
 
-.cat-details h1 {
+.opposum-details h1 {
   font-size: var(--font-xxl);
   margin: 15px 0 3px;
 }
 
-.cat-details h2 {
+.opposum-details h2 {
   font-size: var(--font-xl);
   margin: 0 0 10px;
   margin-top: 0;
   margin-bottom: 10px;
 }
 
-.cat-details h3 {
+.opposum-details h3 {
   margin: 20px 0 10px;
   font-size: var(--font-l);
 }
 
-.cat-details p {
+.opposum-details p {
   font-size: var(--font-reg);
   margin: 5px 0;
 }
@@ -188,14 +188,14 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .cat-container {
+  .opposum-container {
     padding: 35px 30px;
     flex-direction: row;
     align-items: center;
     justify-content: start;
   }
 
-  .cat-img {
+  .opposum-img {
     width: 25%;
     max-width: 250px;
     margin-right: 25px;
