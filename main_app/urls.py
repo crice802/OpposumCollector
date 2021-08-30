@@ -14,5 +14,8 @@ urlpatterns = [
 
     path('opposums/<int:pk>/update/', views.OpposumDelete.as_view(), name='opposums_delete'),
 
-    path('opposums/<int:pk>/update/', views.OpposumUpdate.as_view(), name='opposums_update')
+    path('opposums/<int:pk>/update/', views.OpposumUpdate.as_view(), name='opposums_update'),
+
+    path('opposums/<int:opposum_id>/add_feeding/', views.add_feeding, name='add_feeding'),
+
 ]

@@ -1,10 +1,26 @@
-{% extends 'base.html' %} {% load static %} {% block head %}
-<link
-  rel="stylesheet"
-  type="text/css"
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block head %}
+<link 
+  href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" 
+  rel="stylesheet" 
+/>
+<script 
+  src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"
+>
+</script>
+<link 
+  rel="stylesheet" 
+  type="text/css" 
   href="{% static 'css/opposum-detail.css' %}"
 />
-{% endblock %} {% block content %}
+{% comment %} Add this code below {% endcomment %}
+<script defer src="{% static 'js/opposum-detail.js' %}"></script>
+{% comment %} Add this code above {% endcomment %}
+{% endblock %}
+
+{% block content %}
 
 <section class="opposum-container">
   <div class="opposum-img">
@@ -18,7 +34,7 @@
     {% if opposum.age > 0 %}
     <h2>A {{ opposum.age }} year old {{ opposum.breed }}</h2>
     {% else %}
-    <h2>A {{ opposum.breed }} kitten.</h2>
+    <h2>A {{ opposum.breed }} joey.</h2>
     {% endif %}
     <p>{{ opposum.description }}</p>
     {% comment %} New markup {% endcomment %}
@@ -27,8 +43,72 @@
       <a href="{% url 'opposums_delete' opposum.id %}" class="btn danger">Delete</a>
     </div>
     {% comment %} New markup above {% endcomment %}
-  </div>
+ </div>
   </div>
 </section>
+{% comment %} Existing opposum-container above {% endcomment %}
+<div class="feedings-toy-container">
+  <section class="feedings">
+    <div class="subsection-title">
+      <h2>Feedings</h2>
+      <img 
+        src="" 
+        alt=""
+      />
+      <img 
+        src=""
+        alt=""
+      />
+      <img 
+        src="" 
+        alt=""
+      />
+    </div>
+    <div>
+    {% comment %} New code below {% endcomment %}
+     <h3>Add a Feeding</h3>
+    {% comment %} Add the action below! {% endcomment %}
+    <form
+      action="{% url 'add_feeding' opposum.id %}" 
+      method="post" 
+      class="subsection-content"
+    >
+      {% csrf_token %}
+      {{ feeding_form.as_p }}
+      <button type="submit" class="btn submit">Add Feeding</button>
+    </form>
+    <h3>Past Feedings</h3>
+    {% if opposum.feeding_set.all.count %}
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Meal</th></tr>
+        </thead>
+        <tbody>
+          {% for feeding in opposum.feeding_set.all %}
+            <tr>
+              <td>{{feeding.date}}</td>
+              <td>{{feeding.get_meal_display}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="subsection-content">{{opposum.name}} has never been fed 😟</p>
+    {% endif %}
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Meal</th></tr>
+      </thead>
+      <tbody>
+        {% for feeding in opposum.feeding_set.all %}
+          <tr>
+            <td>{{feeding.date}}</td>
+            <td>{{feeding.get_meal_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
 
 {% endblock %}
