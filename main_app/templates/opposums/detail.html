@@ -21,6 +21,13 @@
     <h2>A {{ opposum.breed }} kitten.</h2>
     {% endif %}
     <p>{{ opposum.description }}</p>
+    {% comment %} New markup {% endcomment %}
+    <div class="opposum-actions">
+      <a href="{% url 'opposums_update' opposum.id %}" class="btn warn">Edit</a>
+      <a href="{% url 'opposums_delete' opposum.id %}" class="btn danger">Delete</a>
+    </div>
+    {% comment %} New markup above {% endcomment %}
+  </div>
   </div>
 </section>
 

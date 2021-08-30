@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 # Create your models here.
 class Opposum(models.Model):
   name = models.CharField(max_length=100)
@@ -9,3 +9,7 @@ class Opposum(models.Model):
 
   def __str__(self):
     return self.name
+
+  def get_absolute_url(self):
+      return reverse("opposums_detail", kwargs={"opposum_id": self.id})
+  

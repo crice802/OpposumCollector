@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .models import Opposum
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 # Create your views here.
 
 #home view
@@ -16,3 +18,15 @@ def opposums_detail(request, opposum_id):
   opposum = Opposum.objects.get(id=opposum_id)
   print(opposum)
   return render(request, 'opposums/detail.html', { 'opposum': opposum })
+
+class OpposumCreate(CreateView):
+  model = Opposum
+  fields = ['name', 'breed', 'description', 'age']
+
+class OpposumUpdate(UpdateView):
+  model = Opposum
+  fields = ['breed', 'description', 'age']
+
+class OpposumDelete(DeleteView):
+  model = Opposum
+  success_url = '/opposums/'

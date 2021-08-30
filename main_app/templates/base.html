@@ -28,8 +28,9 @@
     </div>
     <nav>
       <ul>
-        <li><a href="/opposums">All Opposums</a></li>
-        <li><a href="/about">About</a></li>
+        <li><a href="{% url 'opposums_index' %}">All Opposums</a></li>
+        <li><a href="{% url 'opposums_create' %}">Add an Opposum</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
       </ul>
     </nav>
   </header>
