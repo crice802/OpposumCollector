@@ -1,25 +1,27 @@
-<section class="card-container">
-  {% for opposum in opposums %}
-    <div class="card">
-      {% comment %} Add this line {% endcomment %}
-      <a href="/opposums/{{ opposum.id }}">
-        <div class="card-content">
-          <div class="card-img-container">
-            <img 
-              src="images/bday.png" 
-              alt="Happy Bday opposum boi"
-            >
-          </div>
-          <h2 class="card-title">{{ opposum.name }}</h2>
-          {% if opposum.age > 0 %}
-            <p>A {{ opposum.age }} year old {{ opposum.breed }}</p>
-          {% else %}
-            <p>A {{ opposum.breed }} trash baby.</p>
-          {% endif %}
-          <p><small>{{ opposum.description }}</small></p>
-        </div>
-      {% comment %} And this line {% endcomment %}
-      </a>
-    </div>
-  {% endfor %}
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/opposum-detail.css' %}"
+/>
+{% endblock %} {% block content %}
+
+<section class="opposum-container">
+  <div class="opposum-img">
+    <img
+      src="{% static 'images/bday.png' %}"
+      alt="Opposum in Bday party hat"
+    />
+  </div>
+  <div class="opposum-details">
+    <h1>{{ opposum.name }}</h1>
+    {% if opposum.age > 0 %}
+    <h2>A {{ opposum.age }} year old {{ opposum.breed }}</h2>
+    {% else %}
+    <h2>A {{ opposum.breed }} kitten.</h2>
+    {% endif %}
+    <p>{{ opposum.description }}</p>
+  </div>
 </section>
+
+{% endblock %}

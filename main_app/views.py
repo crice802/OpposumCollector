@@ -14,4 +14,5 @@ def opposums_index(request):
 
 def opposums_detail(request, opposum_id):
   opposum = Opposum.objects.get(id=opposum_id)
+  print(opposum)
   return render(request, 'opposums/detail.html', { 'opposum': opposum })
