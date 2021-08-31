@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Opposum
+from .models import Opposum, Toy
 from .forms import FeedingForm
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 # Create your views here.
 
@@ -43,3 +43,21 @@ def add_feeding(request, opposum_id):
     new_feeding.opposum_id = opposum_id
     new_feeding.save()
   return redirect('opposums_detail', opposum_id=opposum_id)
+
+class ToyCreate(CreateView):
+  model = Toy
+  fields = '__all__'
+
+class ToyList(ListView):
+  model = Toy
+
+class ToyDetail(DetailView):
+  model = Toy
+
+class ToyUpdate(UpdateView):
+  model = Toy
+  fields = ['name', 'color']
+
+class ToyDelete(DeleteView):
+  model = Toy
+  success_url = '/toys/'

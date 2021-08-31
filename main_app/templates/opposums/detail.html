@@ -73,6 +73,12 @@
       method="post" 
       class="subsection-content"
     >
+       {% comment %} New markup below {% endcomment %}
+        {% if opposum.fed_for_today %}
+          <p class="fed">{{ opposum.name }} has been fed all thier meals for today!</p>
+          {% else %}
+            <p class="unfed">{{opposum.name}} might be hungry!</p>
+            {% endif %}
       {% csrf_token %}
       {{ feeding_form.as_p }}
       <button type="submit" class="btn submit">Add Feeding</button>
