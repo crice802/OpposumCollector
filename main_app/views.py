@@ -17,8 +17,9 @@ def opposums_index(request):
 
 def opposums_detail(request, opposum_id):
   opposum = Opposum.objects.get(id=opposum_id)
+  toys_opposum_doesnt_have = Toy.objects.exclude(id__in = opposum.toys.all().values_list('id'))
   feeding_form = FeedingForm()
-  return render(request, 'opposums/detail.html', { 'opposum': opposum, 'feeding_form': feeding_form })
+  return render(request, 'opposums/detail.html', { 'opposum': opposum, 'feeding_form': feeding_form, 'toys': toys_opposum_doesnt_have })
 
 class OpposumCreate(CreateView):
   model = Opposum
@@ -61,3 +62,7 @@ class ToyUpdate(UpdateView):
 class ToyDelete(DeleteView):
   model = Toy
   success_url = '/toys/'
+
+def assoc_toy(request, opposum_id, toy_id):
+  Opposum.objects.get(id=opposum_id).toys.add(toy_id)
+  return redirect('opposums_detail', opposum_id=opposum_id)

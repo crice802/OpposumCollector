@@ -115,6 +115,58 @@
       </tbody>
     </table>
   </section>
+  <section class="toys">
+    <div class="subsection-title">
+      <h2>Toys</h2>
+      <img src="" alt="" />
+      <img src="" alt="" />
+      <img src="" alt="" />
+    </div>
+    <h3>{{ opposum.name }}'s Toys</h3>
+    <div class="subsection-content">
+      {% if opposum.toys.count %}
+        {% for toy in opposum.toys.all %}
+          <div class="toy-container">
+            <div 
+              class="color-block"
+              style="background-color: {{ toy.color }}"
+            ></div>
+            <a href="{% url 'toys_detail' toy.id %}">
+              <p>A {{ toy.color }} {{ toy.name }}</p>
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="no-toys">{{opposum.name}} doesn't have any toys 😞</p>
+      {% endif %}
+    </div>
+   <h3>Available Toys</h3>
+    <div class="subsection-content">
+      {% comment %} We'll display available toys here {% endcomment %}
+      {% if toys.count %}
+        {% for toy in toys.all %}
+          <div class="toy-container">
+            <div 
+              class="color-block"
+              style="background-color: {{ toy.color }}"
+            ></div>
+            <a href="{% url 'toys_detail' toy.id %}">
+              <p>A {{ toy.color }} {{ toy.name }}</p>
+            </a>
+            <div class="card-action">
+            <form action="{% url 'assoc_toy' opposum.id toy.id %}" method="post">
+                {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="all-toys">
+          {{opposum.name}} already has all the available toys 🥳
+        </p>
+      {% endif %}
+    </div>
+  </section>
 </div>
 
 {% endblock %}
