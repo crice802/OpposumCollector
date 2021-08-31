@@ -1,5 +1,5 @@
-{% extends 'base.html' %} 
-{% load static %} 
+{% extends 'base.html' %}
+{% load static %}
 
 {% block head %}
 <link 
@@ -15,70 +15,81 @@
   type="text/css" 
   href="{% static 'css/opposum-detail.css' %}"
 />
-{% comment %} Add this code below {% endcomment %}
 <script defer src="{% static 'js/opposum-detail.js' %}"></script>
-{% comment %} Add this code above {% endcomment %}
 {% endblock %}
 
 {% block content %}
 
 <section class="opposum-container">
   <div class="opposum-img">
-    <img
-      src="{% static 'images/bday.png' %}"
-      alt="Opposum in Bday party hat"
-    />
+    {% if opposum.photo.url %}
+      <img src="{{opposum.photo.url}}" alt="A photo of {{opposum.name}}" class='usr-img'
+      >
+    {% else %}
+    <img 
+      src="{% static 'images/sk8r-boi-opposum.svg' %}" 
+      alt="A skater boy opposum"
+    >
+    {% endif %}
   </div>
   <div class="opposum-details">
     <h1>{{ opposum.name }}</h1>
     {% if opposum.age > 0 %}
-    <h2>A {{ opposum.age }} year old {{ opposum.breed }}</h2>
+      <h2>A {{ opposum.age }} year old {{ opposum.breed }}</h2>
     {% else %}
-    <h2>A {{ opposum.breed }} joey.</h2>
+      <h2>A {{ opposum.breed }} kitten.</h2>
     {% endif %}
     <p>{{ opposum.description }}</p>
-    {% comment %} New markup {% endcomment %}
-    <div class="opposum-actions">
+     <div class="opposum-actions">
       <a href="{% url 'opposums_update' opposum.id %}" class="btn warn">Edit</a>
       <a href="{% url 'opposums_delete' opposum.id %}" class="btn danger">Delete</a>
     </div>
-    {% comment %} New markup above {% endcomment %}
- </div>
+    {% comment %} New markup below {% endcomment %}
+    <h3>Change {{ opposum.name }}'s photo</h3>
+    <p id="file-name"></p>
+    <form 
+      action="{% url 'add_photo' opposum.id %}"
+      enctype="multipart/form-data"
+      method="POST"
+    >
+      {% csrf_token %}
+      <label class="btn secondary">
+        Choose photo
+        <input type="file" name="photo-file" id="file-input">
+      </label>
+      <button type="submit" class="btn submit">Upload Photo</button>
+    </form>
+  {% comment %} New markup above {% endcomment %}
   </div>
 </section>
-{% comment %} Existing opposum-container above {% endcomment %}
 <div class="feedings-toy-container">
   <section class="feedings">
     <div class="subsection-title">
       <h2>Feedings</h2>
       <img 
-        src="" 
-        alt=""
+        src="{% static 'images/opposum-cone.svg' %}" 
+        alt="An ice cream cone opposum"
       />
       <img 
-        src=""
-        alt=""
+        src="{% static 'images/opposum-onigiri.svg' %}"
+        alt="A opposum as onigiri"
       />
       <img 
-        src="" 
-        alt=""
+        src="{% static 'images/kitty-kabob.svg' %}" 
+        alt="A kabob of kittens"
       />
     </div>
-    <div>
-    {% comment %} New code below {% endcomment %}
-     <h3>Add a Feeding</h3>
-    {% comment %} Add the action below! {% endcomment %}
+    <h3>Add a Feeding</h3>
     <form
-      action="{% url 'add_feeding' opposum.id %}" 
       method="post" 
-      class="subsection-content"
+      class='subsection-content'
+      action={% url 'add_feeding' opposum.id %}
     >
-       {% comment %} New markup below {% endcomment %}
-        {% if opposum.fed_for_today %}
-          <p class="fed">{{ opposum.name }} has been fed all thier meals for today!</p>
-          {% else %}
-            <p class="unfed">{{opposum.name}} might be hungry!</p>
-            {% endif %}
+      {% if opposum.fed_for_today %}
+      <p class="fed">{{opposum.name}} has been fed all their meals for today!</p>
+      {% else %}
+      <p class="unfed">{{opposum.name}} might be hungry!</p>
+      {% endif %}
       {% csrf_token %}
       {{ feeding_form.as_p }}
       <button type="submit" class="btn submit">Add Feeding</button>
@@ -101,26 +112,13 @@
     {% else %}
       <p class="subsection-content">{{opposum.name}} has never been fed 😟</p>
     {% endif %}
-    <table>
-      <thead>
-        <tr><th>Date</th><th>Meal</th></tr>
-      </thead>
-      <tbody>
-        {% for feeding in opposum.feeding_set.all %}
-          <tr>
-            <td>{{feeding.date}}</td>
-            <td>{{feeding.get_meal_display}}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
   </section>
   <section class="toys">
     <div class="subsection-title">
       <h2>Toys</h2>
-      <img src="" alt="" />
-      <img src="" alt="" />
-      <img src="" alt="" />
+      <img src="{% static 'images/string.svg' %}" alt="A ball of string" />
+      <img src="{% static 'images/mouse.svg' %}" alt="A mouse" />
+      <img src="{% static 'images/fish.svg' %}" alt="A fishy toy" />
     </div>
     <h3>{{ opposum.name }}'s Toys</h3>
     <div class="subsection-content">
@@ -140,12 +138,12 @@
         <p class="no-toys">{{opposum.name}} doesn't have any toys 😞</p>
       {% endif %}
     </div>
-   <h3>Available Toys</h3>
+    <h3>Available Toys</h3>
     <div class="subsection-content">
       {% comment %} We'll display available toys here {% endcomment %}
       {% if toys.count %}
-        {% for toy in toys.all %}
-          <div class="toy-container">
+        {% for toy in toys.all  %}
+           <div class="toy-container">
             <div 
               class="color-block"
               style="background-color: {{ toy.color }}"
@@ -153,10 +151,9 @@
             <a href="{% url 'toys_detail' toy.id %}">
               <p>A {{ toy.color }} {{ toy.name }}</p>
             </a>
-            <div class="card-action">
             <form action="{% url 'assoc_toy' opposum.id toy.id %}" method="post">
-                {% csrf_token %}
-              <button type="submit" class="btn">Add</button>
+              {% csrf_token %}
+              <button type="submit" class="btn submit">Give toy</button>
             </form>
           </div>
         {% endfor %}
@@ -168,5 +165,5 @@
     </div>
   </section>
 </div>
-
+</div>
 {% endblock %}

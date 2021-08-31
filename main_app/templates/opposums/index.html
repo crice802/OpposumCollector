@@ -22,10 +22,18 @@
       <a href="{% url 'opposums_detail' opposum.id %}">
         <div class="card-content">
           <div class="card-img-container">
+          {% if opposum.photo.url %}
+            <img 
+                src="{{opposum.photo.url}}" 
+                alt="A photo of {{opposum.name}}"
+                class="usr-img"
+              >
+          {% else %}
             <img 
               src="{% static 'images/bday.png' %}" 
               alt="Opposum in Bday party hat"
             >
+          {% endif %}
           </div>
           <h2 class="card-title">{{ opposum.name }}</h2>
           {% if opposum.age > 0 %}

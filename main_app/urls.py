@@ -31,4 +31,7 @@ urlpatterns = [
     path('opposums/<int:opposum_id>/add_feeding/', views.add_feeding, name='add_feeding'),
 # associate a toy with a opposum (M:M)
     path('opposums/<int:opposum_id>/assoc_toy/<int:toy_id>/', views.assoc_toy, name='assoc_toy'),
+
+    path('opposums/<int:opposum_id>/add_photo/', views.add_photo, name='add_photo'),
 ]
+
