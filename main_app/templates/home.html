@@ -9,10 +9,16 @@
       alt="The Opposum Place opposum"
     />
   </div>
-  <img
-    src="{% static 'images/bday.png' %}"
-    alt="Text reads: Opposum Place"
-  />
+  <img src="{% static 'images/bday.png' %}" alt="Text reads: Opposum Place" />
 </section>
 
-{% endblock %}
+{% if not user.is_authentiopposumed %}
+<section>
+  <form action="{% url 'home' %}" method="post" class="login">
+    <h1>Login</h1>
+    {% csrf_token %} {{ form.as_p }}
+    <input type="hidden" name="next" value="{{ next }}" />
+    <button type="submit" class="btn submit">Login</button>
+  </form>
+</section>
+{% endif %} {% endblock %}

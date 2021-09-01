@@ -222,15 +222,15 @@
   width: 100%;
 }
 
-.cat-details h3 {
+.opposum-details h3 {
   margin: 16px 0 10px 0;
 }
 
 #file-input {
   overflow: hidden;
   position: absolute;
-  width: .1px;
-  height: .1px;
+  width: 0.1px;
+  height: 0.1px;
 }
 
 #file-name {
